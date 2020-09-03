@@ -1,17 +1,17 @@
-# pauls-dat-api2
+# dbrowser-api
 
-The internal implementation for [Beaker](https://github.com/beakerbrowser/beaker)'s `DatArchive` APIs.
-Works with Dat 2.0.
+The internal implementation for [DBrowserX](https://github.com/dbrowser/dbrowser)'s `DatArchive` APIs.
+Works with DWebX 2.0.
 
 All async methods work with callbacks and promises. If no callback is provided, a promise will be returned.
 
-Any time a hyperdrive `archive` is expected, a [scoped-fs](https://github.com/pfrazee/scoped-fs) instance can be provided, unless otherwise stated.
+Any time a ddrive `archive` is expected, a [scoped-fs](https://github.com/distributedweb/scoped-fs) instance can be provided, unless otherwise stated.
 
 ```js
-var hyperdrive = require('hyperdrive')
+var ddrive = require('ddrive')
 var ScopedFS = require('scoped-fs')
 
-var archive = hyperdrive('./my-hyperdrive')
+var archive = ddrive('./my-ddrive')
 var scopedfs = new ScopedFS('./my-scoped-fs')
 
 await pda.readFile(archive, '/hello.txt') // read the published hello.txt
@@ -64,17 +64,17 @@ await pda.readFile(scopedfs, '/hello.txt') // read the local hello.txt
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ```js
-const pda = require('pauls-dat-api')
+const pda = require('dbrowser-api')
 ```
 
 ## Lookup
 
 ### stat(archive, name[, opts, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `name` Entry name (string).
  - `opts.lstat` Get symlink information if target is a symlink (boolean).
- - Returns a Hyperdrive Stat entry (object).
+ - Returns a DDrive Stat entry (object).
  - Throws NotFoundError
 
 ```js
@@ -105,7 +105,7 @@ Stat {
 
 ### readFile(archive, name[, opts, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `name` Entry path (string).
  - `opts`. Options (object|string). If a string, will act as `opts.encoding`.
  - `opts.encoding` Desired output encoding (string). May be 'binary', 'utf8', 'hex', 'base64', or 'json'. Default 'utf8'.
@@ -120,7 +120,7 @@ var imageBase64 = await pda.readFile(archive, '/favicon.png', 'base64')
 
 ### readdir(archive, path[, opts, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `path` Target directory path (string).
  - `opts.recursive` Read all subfolders and their files as well if true. Note: does not recurse into mounts.
  - `opts.includeStats` Output an object which includes the file name, stats object, and parent mount information.
@@ -151,7 +151,7 @@ console.log(listing) /* => [
 
 ### readSize(archive, path[, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `path` Target directory path (string).
  - Returns a number (size in bytes).
 
@@ -164,7 +164,7 @@ console.log(size) // => 123
 
 ### createReadStream(archive, name[, opts, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `name` Entry path (string).
  - `opts`. Options (object|string). If a string, will act as `opts.encoding`.
  - `opts.start` Starting offset (number). Default 0.
@@ -186,7 +186,7 @@ pda.createReadStream(archive, '/favicon.png', {
 
 ### writeFile(archive, name, data[, opts, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `name` Entry path (string).
  - `data` Data to write (string|Buffer).
  - `opts`. Options (object|string). If a string, will act as `opts.encoding`.
@@ -201,7 +201,7 @@ await pda.writeFile(archive, '/profile.png', fs.readFileSync('/tmp/dog.png'))
 
 ### mkdir(archive, name[, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `name` Directory path (string).
  - Throws ArchiveNotWritableError, InvalidPathError, EntryAlreadyExistsError, InvalidEncodingError.
 
@@ -211,7 +211,7 @@ await pda.mkdir(archive, '/stuff')
 
 ### symlink(archive, target, linkname[, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `target` Path to symlink to (string).
  - `linkname` Path to create the symlink (string).
  - Throws ArchiveNotWritableError, InvalidPathError, EntryAlreadyExistsError, InvalidEncodingError.
@@ -222,9 +222,9 @@ await pda.symlink(archive, '/hello.txt', '/goodbye.txt')
 
 ### copy(srcArchive, srcName, dstArchive, dstName[, cb])
 
- - `srcArchive` Source Hyperdrive archive (object).
+ - `srcArchive` Source DDrive archive (object).
  - `srcName` Path to file or directory to copy (string).
- - `dstArchive` Destination Hyperdrive archive (object).
+ - `dstArchive` Destination DDrive archive (object).
  - `dstName` Where to copy the file or folder to (string).
  - Throws ArchiveNotWritableError, InvalidPathError, EntryAlreadyExistsError, InvalidEncodingError.
 
@@ -237,9 +237,9 @@ await pda.copy(archive, '/stuff', otherArchive, '/stuff')
 
 ### rename(srcArchive, srcName, dstName[, cb])
 
- - `srcArchive` Source Hyperdrive archive (object).
+ - `srcArchive` Source DDrive archive (object).
  - `srcName` Path to file or directory to rename (string).
- - `dstArchive` Destination Hyperdrive archive (object).
+ - `dstArchive` Destination DDrive archive (object).
  - `dstName` What the file or folder should be named (string).
  - Throws ArchiveNotWritableError, InvalidPathError, EntryAlreadyExistsError, InvalidEncodingError.
 
@@ -254,7 +254,7 @@ await pda.rename(archive, '/stuff', otherArchive, '/stuff')
 
 ### updateMetadata(archive, path, metadata[, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `path` Entry path (string).
  - `metadata` Metadata values to set (object).
 
@@ -273,7 +273,7 @@ await pda.updateMetadata(archive, '/hello.txt', {'bin:foo': Buffer.from([1,2,3,4
 
 ### deleteMetadata(archive, path, keys[, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `path` Entry path (string).
  - `keys` Metadata keys to delete (string | string[]).
 
@@ -283,7 +283,7 @@ await pda.deleteMetadata(archive, '/hello.txt', ['foo'])
 
 ### createWriteStream(archive, name[, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `name` Entry path (string).
  - Throws ArchiveNotWritableError, InvalidPathError, EntryAlreadyExistsError.
 
@@ -295,7 +295,7 @@ await pda.createWriteStream(archive, '/hello.txt')
 
 ### unlink(archive, name[, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `name` Entry path (string).
  - Throws ArchiveNotWritableError, NotFoundError, NotAFileError
 
@@ -305,7 +305,7 @@ await pda.unlink(archive, '/hello.txt')
 
 ### rmdir(archive, name[, opts, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `name` Entry path (string).
  - `opts.recursive` Delete all subfolders and files if the directory is not empty.
  - Throws ArchiveNotWritableError, NotFoundError, NotAFolderError, DestDirectoryNotEmpty
@@ -318,7 +318,7 @@ await pda.rmdir(archive, '/stuff', {recursive: true})
 
 ### mount(archive, name, opts[, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `name` Entry path (string).
  - `opts`. Options (object|string). If a string or buffer, will act as `opts.key`.
  - `opts.key` Key of archive to mount. May be a hex string or Buffer.
@@ -330,7 +330,7 @@ await pda.mount(archive, '/foo', archive2.key)
 
 ### unmount(archive, name[, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `name` Entry path (string).
  - Throws ArchiveNotWritableError, InvalidPathError, NotFoundError
 
@@ -342,7 +342,7 @@ await pda.unmount(archive, '/foo')
 
 ### watch(archive[, path])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `path` Prefix path. If falsy, will watch all files.
  - Returns a Readable stream.
 
@@ -370,7 +370,7 @@ events.on('changed', args => {
 
 ### createNetworkActivityStream(archive)
 
- - `archive` Hyperdrive archive (object). Can not be a scoped-fs object.
+ - `archive` DDrive archive (object). Can not be a scoped-fs object.
  - Returns a Readable stream.
 
 Watches the archive for network events, which it emits as an [emit-stream](https://github.com/substack/emit-stream). Supported events:
@@ -509,7 +509,7 @@ console.log(stats) /* => {
 
 ### readManifest(archive[, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
 
 A sugar to get the manifest object.
 
@@ -519,24 +519,24 @@ var manifestObj = await pda.readManifest(archive)
 
 ### writeManifest(archive, manifest[, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `manifest` Manifest values (object).
 
 A sugar to write the manifest object.
 
 ```js
-await pda.writeManifest(archive, { title: 'My dat!' })
+await pda.writeManifest(archive, { title: 'My dwebx!' })
 ```
 
 ### updateManifest(archive, manifest[, cb])
 
- - `archive` Hyperdrive archive (object).
+ - `archive` DDrive archive (object).
  - `manifest` Manifest values (object).
 
 A sugar to modify the manifest object.
 
 ```js
-await pda.writeManifest(archive, { title: 'My dat!', description: 'the desc' })
+await pda.writeManifest(archive, { title: 'My dwebx!', description: 'the desc' })
 await pda.writeManifest(archive, { title: 'My new title!' }) // preserves description
 ```
 
@@ -548,7 +548,7 @@ Helper to generate a manifest object. Opts in detail:
 
 ```
 {
-  url: String, the dat's url
+  url: String, the dwebx's url
   title: String
   description: String
   type: String

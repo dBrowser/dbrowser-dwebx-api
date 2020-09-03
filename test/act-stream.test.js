@@ -13,7 +13,7 @@ test.after(async () => {
 
 test('watch fs', async t => {
   // HACK
-  // 100ms timeouts are needed here because the FS watcher is not as consistent as dat's
+  // 100ms timeouts are needed here because the FS watcher is not as consistent as dwebx's
   // -prf
 
   var fs
@@ -223,7 +223,7 @@ test.skip('createNetworkActivityStream', async t => {
     { name: 'bar.data', content: Buffer.from([0x00, 0x01]) },
     'bar.txt'
   ])
-  const dst = hyperdrive(tutil.tmpdir(), src.key, {sparse: false})
+  const dst = ddrive(tutil.tmpdir(), src.key, {sparse: false})
 
   var done = new Promise(resolve => {
     var stream = pda.createNetworkActivityStream(dst)

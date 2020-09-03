@@ -15,48 +15,48 @@ test('read/write/update manifest', async t => {
   var archive = await tutil.createArchive(daemon, [])
 
   await pda.writeManifest(archive, {
-    url: `dat://${tutil.FAKE_DAT_KEY}`,
-    title: 'My Dat',
-    description: 'This dat has a manifest!',
+    url: `dwebx://${tutil.FAKE_DAT_KEY}`,
+    title: 'My DWebX',
+    description: 'This dwebx has a manifest!',
     type: 'foo bar',
-    links: {repository: 'https://github.com/pfrazee/pauls-dat-api.git'},
-    author: 'dat://ffffffffffffffffffffffffffffffff'
+    links: {repository: 'https://github.com/distributedweb/dbrowser-api.git'},
+    author: 'dwebx://ffffffffffffffffffffffffffffffff'
   })
 
   t.deepEqual(await pda.readManifest(archive), {
-    title: 'My Dat',
-    description: 'This dat has a manifest!',
+    title: 'My DWebX',
+    description: 'This dwebx has a manifest!',
     type: 'foo bar',
-    links: {repository: [{href: 'https://github.com/pfrazee/pauls-dat-api.git'}]},
-    url: `dat://${tutil.FAKE_DAT_KEY}`,
-    author: 'dat://ffffffffffffffffffffffffffffffff'
+    links: {repository: [{href: 'https://github.com/distributedweb/dbrowser-api.git'}]},
+    url: `dwebx://${tutil.FAKE_DAT_KEY}`,
+    author: 'dwebx://ffffffffffffffffffffffffffffffff'
   })
 
   await pda.updateManifest(archive, {
-    title: 'My Dat!!',
+    title: 'My DWebX!!',
     type: 'foo'
   })
 
   t.deepEqual(await pda.readManifest(archive), {
-    title: 'My Dat!!',
-    description: 'This dat has a manifest!',
+    title: 'My DWebX!!',
+    description: 'This dwebx has a manifest!',
     type: 'foo',
-    links: {repository: [{href: 'https://github.com/pfrazee/pauls-dat-api.git'}]},
-    url: `dat://${tutil.FAKE_DAT_KEY}`,
-    author: 'dat://ffffffffffffffffffffffffffffffff'
+    links: {repository: [{href: 'https://github.com/distributedweb/dbrowser-api.git'}]},
+    url: `dwebx://${tutil.FAKE_DAT_KEY}`,
+    author: 'dwebx://ffffffffffffffffffffffffffffffff'
   })
 
   await pda.updateManifest(archive, {
-    author: {url: 'dat://foo.com'}
+    author: {url: 'dwebx://foo.com'}
   })
 
   t.deepEqual(await pda.readManifest(archive), {
-    title: 'My Dat!!',
-    description: 'This dat has a manifest!',
+    title: 'My DWebX!!',
+    description: 'This dwebx has a manifest!',
     type: 'foo',
-    links: {repository: [{href: 'https://github.com/pfrazee/pauls-dat-api.git'}]},
-    url: `dat://${tutil.FAKE_DAT_KEY}`,
-    author: 'dat://foo.com'
+    links: {repository: [{href: 'https://github.com/distributedweb/dbrowser-api.git'}]},
+    url: `dwebx://${tutil.FAKE_DAT_KEY}`,
+    author: 'dwebx://foo.com'
   })
 
   // should ignore bad well-known values
@@ -67,12 +67,12 @@ test('read/write/update manifest', async t => {
   })
 
   t.deepEqual(await pda.readManifest(archive), {
-    title: 'My Dat!!',
-    description: 'This dat has a manifest!',
+    title: 'My DWebX!!',
+    description: 'This dwebx has a manifest!',
     type: 'foo',
-    links: {repository: [{href: 'https://github.com/pfrazee/pauls-dat-api.git'}]},
-    url: `dat://${tutil.FAKE_DAT_KEY}`,
-    author: 'dat://foo.com',
+    links: {repository: [{href: 'https://github.com/distributedweb/dbrowser-api.git'}]},
+    url: `dwebx://${tutil.FAKE_DAT_KEY}`,
+    author: 'dwebx://foo.com',
     foobar: true
   })
 })

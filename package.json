@@ -1,32 +1,32 @@
 {
-  "name": "pauls-dat-api2",
+  "name": "dbrowser-api",
   "version": "1.0.0",
-  "description": "Beaker's DatArchive implementation for Dat 2.0",
+  "description": "DBrowserX's DatArchive implementation for DWebX 2.0",
   "main": "index.js",
   "scripts": {
     "test": "ava -s test/*.test.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/beakerbrowser/pauls-dat-api2.git"
+    "url": "git+https://github.com/dbrowser/dbrowser-api.git"
   },
   "keywords": [
-    "dat",
-    "hyperdrive",
+    "dwebx",
+    "ddrive",
     "p2p",
     "files"
   ],
   "author": "Paul Frazee <pfrazee@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/beakerbrowser/pauls-dat-api2/issues"
+    "url": "https://github.com/dbrowser/dbrowser-api/issues"
   },
-  "homepage": "https://github.com/beakerbrowser/pauls-dat-api2#readme",
+  "homepage": "https://github.com/dbrowser/dbrowser-api#readme",
   "dependencies": {
     "anymatch": "^1.3.2",
-    "beaker-error-constants": "^1.4.0",
+    "dbrowser-error-constants": "git://github.com/dbrowser/dbrowser-error-constants.git#03f7044ca29925fc91b2efc2f7ac1ea23ff3bb7e",
     "call-me-maybe": "^1.0.1",
-    "dat-encoding": "^4.0.2",
+    "dwebx-encoding": "git://github.com/DistributedWeb/dwebx-encoding.git#adbab1965b1152c3a7252ca01807e9744c713398",
     "diff-file-tree": "^2.3.2",
     "emit-stream": "^0.1.2",
     "fs-extra": "^4.0.3",
@@ -34,11 +34,11 @@
     "streamx": "^2.5.0"
   },
   "devDependencies": {
-    "@hyperswarm/dht": "^1.0.1",
+    "@dwebswarm/dht": "git://github.com/DistributedWeb/dht.git#fb5fe2b28c7f191156dcd6216c5cca2c0bf7bb37",
     "ava": "^0.18.1",
     "concat-stream": "^2.0.0",
-    "hyperdrive-daemon": "beta",
-    "hyperdrive-daemon-client": "beta",
+    "ddrive-daemon": "git://github.com/DistributedWeb/ddrive-daemon.git#4cb468384029755b178987412dac30cb309536bf",
+    "ddrive-daemon-client": "git://github.com/DistributedWeb/ddrive-daemon-client.git#bb2df8dfe20be7d5824a7cb5427e6be43acf013d",
     "into-stream": "^5.1.1",
     "scoped-fs": "^1.4.1",
     "tmp-promise": "^2.0.2"

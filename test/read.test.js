@@ -1,5 +1,5 @@
 const test = require('ava')
-const {NotFoundError, NotAFileError} = require('beaker-error-constants')
+const {NotFoundError, NotAFileError} = require('dbrowser-error-constants')
 const tutil = require('./util')
 const pda = require('../index')
 const pump = require('pump')
