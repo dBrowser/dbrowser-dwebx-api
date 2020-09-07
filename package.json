@@ -37,7 +37,7 @@
     "@dwebswarm/dht": "git://github.com/DistributedWeb/dht.git#fb5fe2b28c7f191156dcd6216c5cca2c0bf7bb37",
     "ava": "^0.18.1",
     "concat-stream": "^2.0.0",
-    "ddrive-daemon": "git://github.com/DistributedWeb/ddrive-daemon.git#4cb468384029755b178987412dac30cb309536bf",
+    "ddrive-daemon": "git://github.com/DistributedWeb/ddrive-daemon.git#3ccb3e8b817edaa4fc2578b3e79ca07105272752",
     "ddrive-daemon-client": "git://github.com/DistributedWeb/ddrive-daemon-client.git#bb2df8dfe20be7d5824a7cb5427e6be43acf013d",
     "into-stream": "^5.1.1",
     "scoped-fs": "^1.4.1",
