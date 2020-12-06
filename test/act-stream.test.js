@@ -1,6 +1,6 @@
 const test = require('ava')
 const tutil = require('./util')
-const pda = require('../index')
+const dba = require('../index')
 
 var daemon
 
@@ -25,7 +25,7 @@ test('watch fs', async t => {
   // =
 
   fs = await tutil.createFs()
-  stream = await pda.watch(fs)
+  stream = await dba.watch(fs)
 
   done = new Promise(resolve => {
     changes = ['/a.txt', '/b.txt', '/a.txt', '/a.txt', '/b.txt', '/c.txt']
@@ -42,24 +42,24 @@ test('watch fs', async t => {
   })
 
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/a.txt', 'one', 'utf8')
+  await dba.writeFile(fs, '/a.txt', 'one', 'utf8')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/b.txt', 'one', 'utf8')
+  await dba.writeFile(fs, '/b.txt', 'one', 'utf8')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/a.txt', 'one', 'utf8')
+  await dba.writeFile(fs, '/a.txt', 'one', 'utf8')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/a.txt', 'two', 'utf8')
+  await dba.writeFile(fs, '/a.txt', 'two', 'utf8')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/b.txt', 'two', 'utf8')
+  await dba.writeFile(fs, '/b.txt', 'two', 'utf8')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/c.txt', 'one', 'utf8')
+  await dba.writeFile(fs, '/c.txt', 'one', 'utf8')
   await done
 
   // individual file
   // =
 
   fs = await tutil.createFs()
-  stream = await pda.watch(fs, '/a.txt')
+  stream = await dba.watch(fs, '/a.txt')
 
   done = new Promise(resolve => {
     changes = ['/a.txt', '/a.txt', '/a.txt']
@@ -76,24 +76,24 @@ test('watch fs', async t => {
   })
 
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/a.txt', 'one', 'utf8')
+  await dba.writeFile(fs, '/a.txt', 'one', 'utf8')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/b.txt', 'one', 'utf8')
+  await dba.writeFile(fs, '/b.txt', 'one', 'utf8')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/a.txt', 'one', 'utf8')
+  await dba.writeFile(fs, '/a.txt', 'one', 'utf8')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/a.txt', 'two', 'utf8')
+  await dba.writeFile(fs, '/a.txt', 'two', 'utf8')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/b.txt', 'two', 'utf8')
+  await dba.writeFile(fs, '/b.txt', 'two', 'utf8')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/c.txt', 'one', 'utf8')
+  await dba.writeFile(fs, '/c.txt', 'one', 'utf8')
   await done
 
   // subfolder
   // =
 
   fs = await tutil.createFs()
-  stream = await pda.watch(fs, '/foo')
+  stream = await dba.watch(fs, '/foo')
 
   done = new Promise(resolve => {
     changes = ['/foo', '/foo/a.txt', '/foo/b.txt', '/foo/a.txt', '/foo/a.txt', '/foo/b.txt', '/foo/c.txt']
@@ -110,21 +110,21 @@ test('watch fs', async t => {
   })
 
   await new Promise(r => setTimeout(r, 100))
-  await pda.mkdir(fs, '/foo')
+  await dba.mkdir(fs, '/foo')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/ignored.txt', 'one', 'utf8')
+  await dba.writeFile(fs, '/ignored.txt', 'one', 'utf8')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/foo/a.txt', 'one', 'utf8')
+  await dba.writeFile(fs, '/foo/a.txt', 'one', 'utf8')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/foo/b.txt', 'one', 'utf8')
+  await dba.writeFile(fs, '/foo/b.txt', 'one', 'utf8')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/foo/a.txt', 'one', 'utf8')
+  await dba.writeFile(fs, '/foo/a.txt', 'one', 'utf8')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/foo/a.txt', 'two', 'utf8')
+  await dba.writeFile(fs, '/foo/a.txt', 'two', 'utf8')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/foo/b.txt', 'two', 'utf8')
+  await dba.writeFile(fs, '/foo/b.txt', 'two', 'utf8')
   await new Promise(r => setTimeout(r, 100))
-  await pda.writeFile(fs, '/foo/c.txt', 'one', 'utf8')
+  await dba.writeFile(fs, '/foo/c.txt', 'one', 'utf8')
   await done
 
 })
@@ -139,7 +139,7 @@ test('watch archive', async t => {
   // =
 
   archive = await tutil.createArchive(daemon)
-  stream = pda.watch(archive)
+  stream = dba.watch(archive)
 
   done = new Promise(resolve => {
     changes = ['/a.txt', '/b.txt', '/a.txt', '/a.txt', '/b.txt', '/c.txt']
@@ -152,19 +152,19 @@ test('watch archive', async t => {
     })
   })
 
-  await pda.writeFile(archive, '/a.txt', 'one', 'utf8')
-  await pda.writeFile(archive, '/b.txt', 'one', 'utf8')
-  await pda.writeFile(archive, '/a.txt', 'one', 'utf8')
-  await pda.writeFile(archive, '/a.txt', 'two', 'utf8')
-  await pda.writeFile(archive, '/b.txt', 'two', 'utf8')
-  await pda.writeFile(archive, '/c.txt', 'one', 'utf8')
+  await dba.writeFile(archive, '/a.txt', 'one', 'utf8')
+  await dba.writeFile(archive, '/b.txt', 'one', 'utf8')
+  await dba.writeFile(archive, '/a.txt', 'one', 'utf8')
+  await dba.writeFile(archive, '/a.txt', 'two', 'utf8')
+  await dba.writeFile(archive, '/b.txt', 'two', 'utf8')
+  await dba.writeFile(archive, '/c.txt', 'one', 'utf8')
   await done
 
   // one file
   // =
 
   archive = await tutil.createArchive(daemon)
-  stream = pda.watch(archive, '/a.txt')
+  stream = dba.watch(archive, '/a.txt')
 
   done = new Promise(resolve => {
     changes = ['/a.txt', '/a.txt', '/a.txt']
@@ -177,19 +177,19 @@ test('watch archive', async t => {
     })
   })
 
-  await pda.writeFile(archive, '/a.txt', 'one', 'utf8')
-  await pda.writeFile(archive, '/b.txt', 'one', 'utf8')
-  await pda.writeFile(archive, '/a.txt', 'one', 'utf8')
-  await pda.writeFile(archive, '/a.txt', 'two', 'utf8')
-  await pda.writeFile(archive, '/b.txt', 'two', 'utf8')
-  await pda.writeFile(archive, '/c.txt', 'one', 'utf8')
+  await dba.writeFile(archive, '/a.txt', 'one', 'utf8')
+  await dba.writeFile(archive, '/b.txt', 'one', 'utf8')
+  await dba.writeFile(archive, '/a.txt', 'one', 'utf8')
+  await dba.writeFile(archive, '/a.txt', 'two', 'utf8')
+  await dba.writeFile(archive, '/b.txt', 'two', 'utf8')
+  await dba.writeFile(archive, '/c.txt', 'one', 'utf8')
   await done
 
   // subfolder
   // =
 
   archive = await tutil.createArchive(daemon)
-  stream = pda.watch(archive, '/foo')
+  stream = dba.watch(archive, '/foo')
 
   done = new Promise(resolve => {
     changes = ['/foo', '/foo/a.txt', '/foo/b.txt', '/foo/a.txt', '/foo/a.txt', '/foo/b.txt', '/foo/c.txt']
@@ -202,14 +202,14 @@ test('watch archive', async t => {
     })
   })
 
-  await pda.mkdir(archive, '/foo')
-  await pda.writeFile(archive, '/ignored.txt', 'one', 'utf8')
-  await pda.writeFile(archive, '/foo/b.txt', 'one', 'utf8')
-  await pda.writeFile(archive, '/foo/a.txt', 'one', 'utf8')
-  await pda.writeFile(archive, '/foo/a.txt', 'two', 'utf8')
-  await pda.writeFile(archive, '/foo/b.txt', 'two', 'utf8')
-  await pda.writeFile(archive, '/foo/c.txt', 'one', 'utf8')
-  await pda.writeFile(archive, '/foo/c.txt', 'one', 'utf8')
+  await dba.mkdir(archive, '/foo')
+  await dba.writeFile(archive, '/ignored.txt', 'one', 'utf8')
+  await dba.writeFile(archive, '/foo/b.txt', 'one', 'utf8')
+  await dba.writeFile(archive, '/foo/a.txt', 'one', 'utf8')
+  await dba.writeFile(archive, '/foo/a.txt', 'two', 'utf8')
+  await dba.writeFile(archive, '/foo/b.txt', 'two', 'utf8')
+  await dba.writeFile(archive, '/foo/c.txt', 'one', 'utf8')
+  await dba.writeFile(archive, '/foo/c.txt', 'one', 'utf8')
   await done
 
   // give the streams 100ms to cleanup, otherwise the grpc library will throw
@@ -226,7 +226,7 @@ test.skip('createNetworkActivityStream', async t => {
   const dst = ddrive(tutil.tmpdir(), src.key, {sparse: false})
 
   var done = new Promise(resolve => {
-    var stream = pda.createNetworkActivityStream(dst)
+    var stream = dba.createNetworkActivityStream(dst)
     var gotPeer = false
     var stats = {
       metadata: {

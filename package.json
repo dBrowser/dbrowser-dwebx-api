@@ -1,7 +1,7 @@
 {
   "name": "dbrowser-api",
   "version": "1.0.0",
-  "description": "DBrowserX's DatArchive implementation for DWebX 2.0",
+  "description": "dBrowser's DWebXArchive implementation for DWebX 2.0",
   "main": "index.js",
   "scripts": {
     "test": "ava -s test/*.test.js"

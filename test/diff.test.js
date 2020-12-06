@@ -1,6 +1,6 @@
 const test = require('ava')
 const tutil = require('./util')
-const pda = require('../index')
+const dba = require('../index')
 
 var daemon
 
@@ -22,26 +22,26 @@ test('diff', async t => {
     { name: 'subdir/bar.data', content: Buffer.from([0x00, 0x01]) }
   ])
 
-  changes = await pda.diff(archive)
+  changes = await dba.diff(archive)
   t.is(changes.length, 5)
   t.is(changes[0].type, 'put')
   t.is(changes[0].name, 'subdir')
   t.is(typeof changes[0].value.stat, 'object')
   t.is(changes[0].value.stat.mode, 16877)
 
-  changes = await pda.diff(archive, 2)
+  changes = await dba.diff(archive, 2)
   t.is(changes.length, 4)
   var oldArchive = await archive.checkout(2)
-  var changes2 = await pda.diff(archive, oldArchive)
+  var changes2 = await dba.diff(archive, oldArchive)
   t.deepEqual(changes, changes2)
-  changes = await pda.diff(archive, 0, 'subdir')
+  changes = await dba.diff(archive, 0, 'subdir')
   t.is(changes.length, 3)
 
   var archive2 = await tutil.createArchive(daemon, ['bar'])
-  await pda.mount(archive, '/foo', archive2.key)
+  await dba.mount(archive, '/foo', archive2.key)
   // TODO mounts
 
-  await pda.writeFile(archive, '/meta', '', {metadata: {foo: 'bar'}})
-  changes = await pda.diff(archive)
+  await dba.writeFile(archive, '/meta', '', {metadata: {foo: 'bar'}})
+  changes = await dba.diff(archive)
   t.is(changes.find(c => c.name === 'meta').value.stat.metadata.foo, 'bar')
 })
